@@ -1,0 +1,43 @@
+{% extends "layout.html" %}
+
+{% block title %}Add Project - Abhidha Construction{% endblock %}
+{% block header_title %}Add a New Project{% endblock %}
+
+{% block content %}
+<div class="form-card">
+    <form method="POST" action="{{ url_for('add_project') }}" role="form" aria-label="Add new project form">
+        <div class="form-group">
+            <label for="proj-name">Name of Project <span style="color: var(--color-danger);">*</span></label>
+            <input type="text" id="proj-name" name="proj-name" required autofocus placeholder="Enter project name">
+        </div>
+        <div class="form-group">
+            <label for="chief-engineer">Chief Engineer</label>
+            <input type="text" id="chief-engineer" name="chief-engineer" placeholder="Enter chief engineer name">
+        </div>
+        <div class="form-group">
+            <label for="contracted-by">Contracted By</label>
+            <input type="text" id="contracted-by" name="contracted-by" placeholder="Enter contractor name">
+        </div>
+        <div class="form-group">
+            <label for="start-date">Construction Started On</label>
+            <input type="date" id="start-date" name="start-date">
+        </div>
+        <div class="form-group">
+            <label for="due-date">Expected Due Date</label>
+            <input type="date" id="due-date" name="due-date">
+        </div>
+        <div class="form-group">
+            <label for="contact">Contact Number</label>
+            <input type="tel" id="contact" name="contact" placeholder="Enter contact number">
+        </div>
+        <div class="form-group">
+            <label for="drive-link">Add Plan Drive Link</label>
+            <input type="url" id="drive-link" name="drive-link" placeholder="https://drive.google.com/...">
+        </div>
+        <div style="display: flex; gap: 1rem; margin-top: 1.5rem;">
+            <button type="submit" class="btn btn-primary">Save Project</button>
+            <a href="{{ url_for('projects') }}" class="btn btn-secondary">Cancel</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

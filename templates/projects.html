@@ -1,0 +1,41 @@
+{% extends "layout.html" %}
+
+{% block title %}On-going Projects - Abhidha Construction{% endblock %}
+{% block header_title %}On-going Projects{% endblock %}
+
+{% block content %}
+<div class="page-actions">
+    <a href="{{ url_for('completed_projects') }}" class="btn btn-secondary">View Completed Projects</a>
+    <a href="{{ url_for('add_project') }}" class="btn btn-primary">Add New Project</a>
+</div>
+
+{% if projects %}
+<div class="project-grid">
+    {% for project in projects %}
+    <article class="project-card-container">
+        <a href="{{ url_for('project_details', project_id=project.id) }}" class="project-card" aria-label="View details for {{ project.name }}">
+            <div class="project-img-placeholder">
+                <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+            </div>
+            <h3>{{ project.name }}</h3>
+            {% if project.due_date %}
+            <p style="padding: 0 1.5rem; color: var(--color-secondary); font-size: 0.9rem;">
+                Due: {{ project.due_date }}
+            </p>
+            {% endif %}
+        </a>
+        <form action="{{ url_for('complete_project', project_id=project.id) }}" method="POST" class="complete-form">
+            <button type="submit" class="btn btn-primary btn-small" onclick="return confirm('Mark this project as completed?')">Mark as Complete</button>
+        </form>
+    </article>
+    {% endfor %}
+</div>
+{% else %}
+<div class="form-card text-center">
+    <p style="font-size: 1.1rem; color: var(--color-secondary); margin-bottom: 1.5rem;">
+        There are no on-going projects at the moment.
+    </p>
+    <a href="{{ url_for('add_project') }}" class="btn btn-primary">Add Your First Project</a>
+</div>
+{% endif %}
+{% endblock %}

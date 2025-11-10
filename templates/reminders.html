@@ -1,0 +1,32 @@
+{% extends "layout.html" %}
+{% block title %}Reminders - Abhidha Construction{% endblock %}
+{% block header_title %}Reminders{% endblock %}
+{% block content %}
+<div class="form-card">
+    <h3>Add a New Reminder</h3>
+    <form method="POST" action="{{ url_for('reminders') }}" class="simple-form" role="form" aria-label="Add reminder form">
+        <input type="text" name="text" placeholder="Enter reminder text..." required autofocus>
+        <button type="submit" class="btn btn-primary">Add Reminder</button>
+    </form>
+    
+    <hr style="margin: 2rem 0;">
+    
+    <h3>Task List</h3>
+    {% if reminders %}
+    <ul class="reminder-list" role="list">
+        {% for reminder in reminders %}
+        <li role="listitem">
+            <form action="{{ url_for('toggle_reminder', rem_id=reminder.id) }}" method="POST">
+                <input type="checkbox" id="reminder-{{ reminder.id }}" {% if reminder.done %}checked{% endif %} onchange="this.form.submit()">
+                <label for="reminder-{{ reminder.id }}" class="{% if reminder.done %}done{% endif %}">{{ reminder.text }}</label>
+            </form>
+        </li>
+        {% endfor %}
+    </ul>
+    {% else %}
+    <p style="color: var(--color-secondary); font-size: 1.05rem; margin-top: 1rem;">
+        No reminders yet. Add one above to get started!
+    </p>
+    {% endif %}
+</div>
+{% endblock %}

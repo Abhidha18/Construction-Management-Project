@@ -1,0 +1,35 @@
+{% extends "layout.html" %}
+
+{% block title %}Completed Projects - Abhidha Construction{% endblock %}
+{% block header_title %}Completed Projects{% endblock %}
+
+{% block content %}
+<div class="page-actions">
+    <a href="{{ url_for('projects') }}" class="btn btn-secondary">Back to On-going Projects</a>
+</div>
+
+{% if projects %}
+<div class="project-grid">
+    {% for project in projects %}
+    <article class="project-card-container">
+        <a href="{{ url_for('project_details', project_id=project.id) }}" class="project-card completed" aria-label="View details for {{ project.name }}">
+            <div class="project-img-placeholder">
+                <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            </div>
+            <h3>{{ project.name }}</h3>
+            <p style="padding: 0 1.5rem 1.5rem; color: var(--color-success); font-weight: 600;">
+                ✓ Completed
+            </p>
+        </a>
+    </article>
+    {% endfor %}
+</div>
+{% else %}
+<div class="form-card text-center">
+    <p style="font-size: 1.1rem; color: var(--color-secondary); margin-bottom: 1.5rem;">
+        There are no completed projects yet.
+    </p>
+    <a href="{{ url_for('projects') }}" class="btn btn-primary">View On-going Projects</a>
+</div>
+{% endif %}
+{% endblock %}

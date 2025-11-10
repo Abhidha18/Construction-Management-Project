@@ -1,0 +1,58 @@
+{% extends "layout.html" %}
+{% block title %}Partners - Abhidha Construction{% endblock %}
+{% block header_title %}Partners{% endblock %}
+{% block content %}
+<div class="form-card">
+    <h3>Add New Partner</h3>
+    <form method="POST" action="{{ url_for('partners') }}" role="form" aria-label="Add partner form">
+        <div class="form-group">
+            <label for="name">Company Name <span style="color: var(--color-danger);">*</span></label>
+            <input type="text" id="name" name="name" required autofocus placeholder="Enter company name">
+        </div>
+        <div class="form-group">
+            <label for="type">Partner Type</label>
+            <input type="text" id="type" name="type" placeholder="e.g., Supplier, Contractor">
+        </div>
+        <div class="form-group">
+            <label for="contact_person">Contact Person</label>
+            <input type="text" id="contact_person" name="contact_person" placeholder="Enter contact person name">
+        </div>
+        <div class="form-group">
+            <label for="contact_email">Contact Email</label>
+            <input type="email" id="contact_email" name="contact_email" placeholder="email@example.com">
+        </div>
+        <div class="form-group">
+            <label for="contact_phone">Contact Phone</label>
+            <input type="tel" id="contact_phone" name="contact_phone" placeholder="Enter phone number">
+        </div>
+        <button type="submit" class="btn btn-primary">Add Partner</button>
+    </form>
+</div>
+
+<hr class="divider">
+
+<h3>Our Partners</h3>
+{% if partners %}
+<div class="team-grid">
+    {% for partner in partners %}
+    <article class="person-card">
+        <h3>{{ partner.name }}</h3>
+        <p class="partner-type">{{ partner.type or 'Partner' }}</p>
+        <p><strong>Contact:</strong> {{ partner.contact_person or 'N/A' }}</p>
+        {% if partner.contact_email %}
+        <p><strong>Email:</strong> <a href="mailto:{{ partner.contact_email }}">{{ partner.contact_email }}</a></p>
+        {% endif %}
+        {% if partner.contact_phone %}
+        <p><strong>Phone:</strong> <a href="tel:{{ partner.contact_phone }}">{{ partner.contact_phone }}</a></p>
+        {% endif %}
+    </article>
+    {% endfor %}
+</div>
+{% else %}
+<div class="form-card text-center">
+    <p style="font-size: 1.1rem; color: var(--color-secondary); margin-bottom: 1.5rem;">
+        No partners have been added yet.
+    </p>
+</div>
+{% endif %}
+{% endblock %}

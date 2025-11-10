@@ -1,0 +1,53 @@
+{% extends "layout.html" %}
+{% block title %}Team Members - Abhidha Construction{% endblock %}
+{% block header_title %}Team & Staff{% endblock %}
+{% block content %}
+<div class="form-card">
+    <h3>Add New Team Member</h3>
+    <form method="POST" action="{{ url_for('team') }}" role="form" aria-label="Add team member form">
+        <div class="form-group">
+            <label for="name">Full Name <span style="color: var(--color-danger);">*</span></label>
+            <input type="text" id="name" name="name" required autofocus placeholder="Enter full name">
+        </div>
+        <div class="form-group">
+            <label for="role">Role <span style="color: var(--color-danger);">*</span></label>
+            <input type="text" id="role" name="role" required placeholder="e.g., Chief Engineer, Foreman">
+        </div>
+        <div class="form-group">
+            <label for="email">Email Address</label>
+            <input type="email" id="email" name="email" placeholder="email@example.com">
+        </div>
+        <div class="form-group">
+            <label for="phone">Phone Number</label>
+            <input type="tel" id="phone" name="phone" placeholder="Enter phone number">
+        </div>
+        <button type="submit" class="btn btn-primary">Add Member</button>
+    </form>
+</div>
+
+<hr class="divider">
+
+<h3>Our Team</h3>
+{% if team_members %}
+<div class="team-grid">
+    {% for member in team_members %}
+    <article class="person-card">
+        <h3>{{ member.name }}</h3>
+        <p class="partner-type">{{ member.role }}</p>
+        {% if member.email %}
+        <p><strong>Email:</strong> <a href="mailto:{{ member.email }}">{{ member.email }}</a></p>
+        {% endif %}
+        {% if member.phone %}
+        <p><strong>Phone:</strong> <a href="tel:{{ member.phone }}">{{ member.phone }}</a></p>
+        {% endif %}
+    </article>
+    {% endfor %}
+</div>
+{% else %}
+<div class="form-card text-center">
+    <p style="font-size: 1.1rem; color: var(--color-secondary); margin-bottom: 1.5rem;">
+        No team members have been added yet.
+    </p>
+</div>
+{% endif %}
+{% endblock %}
