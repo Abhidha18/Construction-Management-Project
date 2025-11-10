@@ -1,0 +1,59 @@
+{% extends "layout.html" %}
+
+{% block title %}Project Details: {{ project.name }} - Abhidha Construction{% endblock %}
+{% block header_title %}Project Details: {{ project.name }}{% endblock %}
+
+{% block content %}
+<div class="form-card">
+    <div style="margin-bottom: 1.5rem;">
+        <span style="display: inline-block; padding: 0.5rem 1rem; background: {% if project.status == 'completed' %}var(--color-success){% else %}var(--color-primary){% endif %}; color: white; border-radius: var(--border-radius-full); font-weight: 600; font-size: 0.875rem; text-transform: uppercase;">
+            {{ project.status }}
+        </span>
+    </div>
+    
+    <div style="display: grid; gap: 1.5rem;">
+        <div class="form-group">
+            <label>Name of Project</label>
+            <input type="text" value="{{ project.name or 'N/A' }}" readonly style="background: var(--color-light);">
+        </div>
+        <div class="form-group">
+            <label>Chief Engineer</label>
+            <input type="text" value="{{ project.engineer or 'N/A' }}" readonly style="background: var(--color-light);">
+        </div>
+        <div class="form-group">
+            <label>Contracted By</label>
+            <input type="text" value="{{ project.contractor or 'N/A' }}" readonly style="background: var(--color-light);">
+        </div>
+        <div class="form-group">
+            <label>Construction Started On</label>
+            <input type="date" value="{{ project.start_date or '' }}" readonly style="background: var(--color-light);">
+        </div>
+        <div class="form-group">
+            <label>Expected Due Date</label>
+            <input type="date" value="{{ project.due_date or '' }}" readonly style="background: var(--color-light);">
+        </div>
+        <div class="form-group">
+            <label>Contact Number</label>
+            <input type="tel" value="{{ project.contact or 'N/A' }}" readonly style="background: var(--color-light);">
+        </div>
+        <div class="form-group">
+            <label>Plan Drive Link</label>
+            {% if project.drive_link %}
+            <input type="url" value="{{ project.drive_link }}" readonly style="background: var(--color-light);">
+            <a href="{{ project.drive_link }}" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-small" style="margin-top: 0.5rem;">Open Drive Link</a>
+            {% else %}
+            <input type="text" value="No drive link provided" readonly style="background: var(--color-light);">
+            {% endif %}
+        </div>
+    </div>
+    
+    <div style="display: flex; gap: 1rem; margin-top: 2rem;">
+        <a href="{{ url_for('projects') }}" class="btn btn-secondary">Back to Projects</a>
+        {% if project.status != 'completed' %}
+        <form action="{{ url_for('complete_project', project_id=project.id) }}" method="POST" style="display: inline;">
+            <button type="submit" class="btn btn-primary" onclick="return confirm('Mark this project as completed?')">Mark as Complete</button>
+        </form>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
